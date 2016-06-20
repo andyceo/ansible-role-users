@@ -6,10 +6,12 @@ galaxy_info:
   author: andyceo
   description: Add users, configure user-specific settings
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.5
+  min_ansible_version: 2.0
   platforms:
   - name: Ubuntu
     versions:
     - xenial
-  categories:
+  galaxy_tags:
     - system
+
+dependencies: []
