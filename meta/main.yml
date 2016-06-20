@@ -1,0 +1,15 @@
+---
+
+allow_duplicates: no
+
+galaxy_info:
+  author: andyceo
+  description: Add users, configure user-specific settings
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.5
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+  categories:
+    - system
