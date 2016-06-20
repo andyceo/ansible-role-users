@@ -1,5 +1,3 @@
 ---
 
-users:
-  andyceo:
-    sudoers_passwordless: yes
+users: {}

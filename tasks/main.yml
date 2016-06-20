@@ -1,11 +1,21 @@
 ---
 
+- name: Remove user accounts from passwordless sudoers.
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^{{ item.key }}'
+    line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
+    state: absent
+    validate: 'visudo -cf %s'
+  with_dict: "{{ users }}"
+  when: item.value.sudoers_passwordless is not defined or not item.value.sudoers_passwordless
+
 - name: Add user accounts to passwordless sudoers.
   lineinfile:
     dest: /etc/sudoers
-    regexp: '^{{ item }}'
-    line: '{{ item }} ALL=(ALL) NOPASSWD: ALL'
+    regexp: '^{{ item.key }}'
+    line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
     state: present
     validate: 'visudo -cf %s'
   with_dict: "{{ users }}"
-  when: users[item].sudoers_passwordless
+  when: item.value.sudoers_passwordless is defined and item.value.sudoers_passwordless
