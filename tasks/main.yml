@@ -1,5 +1,16 @@
 ---
 
+- name: Add/remove users
+  user:
+    name: "{{ item.key }}"
+    createhome: "{{ item.value.createhome|default(True) }}"
+    generate_ssh_key: "{{ item.value.generate_ssh_key|default(True) }}"
+    state: "{{ item.value.present|default('present') }}"
+    password: "{{ item.value.password|default('') }}"
+    update_password: "{{ item.value.update_password|default('always') }}"
+    groups: "{{ item.value.groups|default(item.key) }}"
+  with_dict: "{{ users }}"
+
 - name: Remove user accounts from passwordless sudoers.
   lineinfile:
     dest: /etc/sudoers
