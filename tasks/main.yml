@@ -4,6 +4,7 @@
   user:
     name: "{{ item.key }}"
     createhome: "{{ item.value.createhome|default(True) }}"
+    shell: "{{ item.value.shell|default('/bin/bash') }}"
     generate_ssh_key: "{{ item.value.generate_ssh_key|default(True) }}"
     state: "{{ item.value.present|default('present') }}"
     password: "{{ item.value.password|default('') }}"
