@@ -22,17 +22,20 @@ This role contain one variable `users`. Thia ia dictionary of form:
         # Create home directory (Default: yes)
         createhome: yes
         
+        # User shell (Default: /bin/bash)
+        shell: /bin/bash
+
         # State of user (add or remove) (Default: present)
         state: present
         
         # Password (in crypted form). To crypt password "guest123" for username "guest", use:
-        # python -c 'import crypt; print crypt.crypt("guest123", "guest")
+        # python -c 'import crypt; print crypt.crypt("guest123", "guest")'
         # the above code will produce gu2KmqcJp0Yyo
         password: gu2KmqcJp0Yyo
         
         # Should password be updated on every ansible run (Default: always)
         update_password: always
 
-        # List of groups user should belongs to (sudo group for administration) (Default: username)
+        # List of groups user should belongs to (sudo group for administration) (Default: empty string, that mean no groups at all)
         groups: sudo
         

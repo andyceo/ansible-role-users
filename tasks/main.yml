@@ -5,11 +5,11 @@
     name: "{{ item.key }}"
     createhome: "{{ item.value.createhome|default(True) }}"
     shell: "{{ item.value.shell|default('/bin/bash') }}"
-    generate_ssh_key: "{{ item.value.generate_ssh_key|default(True) }}"
+    generate_ssh_key: "{{ item.value.generate_ssh_key|default(False) }}"
     state: "{{ item.value.present|default('present') }}"
     password: "{{ item.value.password|default('') }}"
     update_password: "{{ item.value.update_password|default('always') }}"
-    groups: "{{ item.value.groups|default(item.key) }}"
+    groups: "{{ item.value.groups|default('') }}"
   with_dict: "{{ users }}"
 
 - name: Remove user accounts from passwordless sudoers.
