@@ -33,23 +33,23 @@
   when: item.value.sudoers_passwordless is defined and item.value.sudoers_passwordless
 
 - name: Fetch all public ssh keys from all nodes
-  shell: cat {{ users_interconnect_ssh_key }}
+  shell: cat {{ users.ssh.fetch_key }}
   register: users_ssh_keys
   changed_when: false
-  when: users_interconnect_ssh_key and users_interconnect_user
+  when: users.ssh.fetch_key and users.ssh.deploy_key_user
   tags:
-    - users-interconnect
+    - users-ssh
 
 - name: Check fetched keys
   debug: msg="{{ users_ssh_keys.stdout }}"
-  when: users_interconnect_ssh_key and users_interconnect_user
+  when: users.ssh.fetch_key and users.ssh.deploy_key_user
   tags:
-    - users-interconnect
+    - users-ssh
 
 - name: Deploy fetched keys to all hosts except same host on specific user
-  authorized_key: user="{{ users_interconnect_user }}" key="{{ hostvars[item]['users_ssh_keys']['stdout'] }}"
+  authorized_key: user="{{ users.ssh.deploy_key_user }}" key="{{ hostvars[item]['users_ssh_keys']['stdout'] }}"
   with_items:
     - "{{ play_hosts }}"
-  when: users_interconnect_ssh_key and users_interconnect_user and ansible_hostname != item
+  when: users.ssh.fetch_key and users.ssh.deploy_key_user and ansible_hostname != item
   tags:
-    - users-interconnect
+    - users-ssh

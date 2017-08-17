@@ -39,3 +39,7 @@ This role contain one variable `users`. This is the dictionary of form:
 
           # List of groups user should belongs to (sudo group for administration) (Default: empty string, that mean no groups at all)
           groups: sudo
+      
+      ssh:
+        fetch_key: no
+        deploy_key_user: no
