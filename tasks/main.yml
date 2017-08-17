@@ -10,7 +10,7 @@
     password: "{{ item.value.password|default('') }}"
     update_password: "{{ item.value.update_password|default('always') }}"
     groups: "{{ item.value.groups|default('') }}"
-  with_dict: "{{ users }}"
+  with_dict: "{{ users.users }}"
 
 - name: Remove user accounts from passwordless sudoers.
   lineinfile:
@@ -19,7 +19,7 @@
     line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
     state: absent
     validate: 'visudo -cf %s'
-  with_dict: "{{ users }}"
+  with_dict: "{{ users.users }}"
   when: item.value.sudoers_passwordless is not defined or not item.value.sudoers_passwordless
 
 - name: Add user accounts to passwordless sudoers.
@@ -29,7 +29,7 @@
     line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
     state: present
     validate: 'visudo -cf %s'
-  with_dict: "{{ users }}"
+  with_dict: "{{ users.users }}"
   when: item.value.sudoers_passwordless is defined and item.value.sudoers_passwordless
 
 - name: Fetch all public ssh keys from all nodes
