@@ -1,3 +1,6 @@
 ---
 
 users: {}
+
+users_interconnect_ssh_key: no
+users_interconnect_user: no
