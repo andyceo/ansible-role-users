@@ -43,3 +43,4 @@ This role contain one variable `users`. This is the dictionary of form:
       ssh:
         fetch_key: no
         deploy_key_user: no
+        known_hosts_path: no

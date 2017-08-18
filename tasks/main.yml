@@ -55,3 +55,15 @@
   when: users.ssh.fetch_key and users.ssh.deploy_key_user and ansible_hostname != item
   tags:
     - users-ssh
+
+- name: Add hosts to known hosts of each other
+  known_hosts:
+    path: "{{ users.ssh.known_hosts_path }}"
+    name: "{{ item }}"
+    key: "{{ item }} {{ hostvars[item]['users_ssh_keys']['stdout'] }}"
+    state: present
+  with_items:
+    - "{{ play_hosts }}"
+  when: users.ssh.known_hosts_path and users.ssh.fetch_key and users.ssh.deploy_key_user and ansible_hostname != item
+  tags:
+    - users-ssh

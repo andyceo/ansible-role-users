@@ -6,3 +6,4 @@ users:
   ssh:
     fetch_key: no
     deploy_key_user: no
+    known_hosts_path: no
