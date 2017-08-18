@@ -12,25 +12,27 @@
     groups: "{{ item.value.groups|default('') }}"
   with_dict: "{{ users.users }}"
 
-- name: Remove user accounts from passwordless sudoers.
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^{{ item.key }}'
-    line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
-    state: absent
+- name: Add user accounts to sudoers
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/{{ item.key }}
+    owner: root
+    group: root
+    mode: "0440"
     validate: 'visudo -cf %s'
   with_dict: "{{ users.users }}"
-  when: item.value.sudoers_passwordless is not defined or not item.value.sudoers_passwordless
+  when: item.value.sudoers is defined and item.value.sudoers
+  tags:
+    - users-sudoers
 
-- name: Add user accounts to passwordless sudoers.
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^{{ item.key }}'
-    line: '{{ item.key }} ALL=(ALL) NOPASSWD: ALL'
-    state: present
-    validate: 'visudo -cf %s'
+- name: Remove empty or unmanaged sudoers files
+  file:
+    path: /etc/sudoers.d/{{ item.key }}
+    state: absent
   with_dict: "{{ users.users }}"
-  when: item.value.sudoers_passwordless is defined and item.value.sudoers_passwordless
+  when: item.value.sudoers is not defined or not item.value.sudoers
+  tags:
+    - users-sudoers
 
 - name: Fetch all public ssh keys from all nodes
   shell: cat {{ users.ssh.fetch_key }}
