@@ -58,14 +58,41 @@
   tags:
     - users-ssh
 
+- name: Fetch all public ssh host keys from all nodes
+  shell: cat /etc/ssh/ssh_host_ecdsa_key.pub
+  register: users_ssh_host_keys
+  changed_when: false
+  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
+  tags:
+    - users-ssh
+    - users-ssh-host-keys
+
+- name: Check fetched host keys
+  debug: msg="{{ users_ssh_host_keys.stdout }}"
+  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
+  tags:
+    - users-ssh
+    - users-ssh-host-keys
+
 - name: Add hosts to known hosts of each other
   known_hosts:
     path: "{{ users.ssh.known_hosts_path }}"
     name: "{{ item }}"
-    key: "{{ item }} {{ hostvars[item]['users_ssh_keys']['stdout'] }}"
+    key: "{{ item }} {{ hostvars[item]['users_ssh_host_keys']['stdout'] }}"
     state: present
   with_items:
     - "{{ play_hosts }}"
-  when: users.ssh.known_hosts_path and users.ssh.fetch_key and users.ssh.deploy_key_user and ansible_hostname != item
+  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user and ansible_hostname != item
   tags:
     - users-ssh
+    - users-ssh-host-keys
+
+- name: Fix known_hosts file owner
+  file:
+    path: "{{ users.ssh.known_hosts_path }}"
+    owner: "{{ users.ssh.deploy_key_user }}"
+    group: "{{ users.ssh.deploy_key_user }}"
+  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
+  tags:
+    - users-ssh
+    - users-ssh-host-keys
