@@ -87,12 +87,17 @@
     - users-ssh
     - users-ssh-host-keys
 
+- name: Check if known_hosts file exists
+  stat:
+    path: "{{ users.ssh.known_hosts_path }}"
+  register: users_known_hosts
+
 - name: Fix known_hosts file owner
   file:
     path: "{{ users.ssh.known_hosts_path }}"
     owner: "{{ users.ssh.deploy_key_user }}"
     group: "{{ users.ssh.deploy_key_user }}"
-  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
+  when: users.ssh.known_hosts_path and users.ssh.deploy_key_user and users_known_hosts.stat.exists
   tags:
     - users-ssh
     - users-ssh-host-keys
