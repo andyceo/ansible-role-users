@@ -42,7 +42,7 @@
   tags:
     - users-ssh
 
-- name: Check fetched keys
+- name: Print fetched public keys
   debug: msg="{{ users_ssh_keys.stdout }}"
   when: users.ssh.fetch_key and users.ssh.deploy_key_user
   tags:
@@ -67,7 +67,7 @@
     - users-ssh
     - users-ssh-host-keys
 
-- name: Check fetched host keys
+- name: Print fetched public host keys
   debug: msg="{{ users_ssh_host_keys.stdout }}"
   when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
   tags:
@@ -91,6 +91,9 @@
   stat:
     path: "{{ users.ssh.known_hosts_path }}"
   register: users_known_hosts
+  tags:
+    - users-ssh
+    - users-ssh-host-keys
 
 - name: Fix known_hosts file owner
   file:
