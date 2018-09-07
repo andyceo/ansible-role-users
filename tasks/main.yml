@@ -11,6 +11,9 @@
     update_password: "{{ item.value.update_password|default('always') }}"
     groups: "{{ item.value.groups|default('') }}"
   with_dict: "{{ users.users }}"
+  when: item.value.state is not defined or item.value.state != 'ignored'
+  tags:
+    - users-users
 
 - name: Add user accounts to sudoers
   template:

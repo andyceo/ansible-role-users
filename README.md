@@ -33,7 +33,7 @@ This role contain one variable `users`. This is the dictionary of form:
           # User shell (Default: /bin/bash)
           shell: /bin/bash
 
-          # State of user (add or remove) (Default: present)
+          # State of user (add or remove) (Default: present). You can use 'ignored' status to skip this user
           state: present
 
           # Password (in crypted form). To crypt password "guest123" for username "guest", use:
