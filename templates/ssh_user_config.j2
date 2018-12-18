@@ -8,7 +8,7 @@ Host {{ hostvars[item].inventory_hostname_short }}
 {% if hostvars[item].ansible_host is defined %}HostName {{ hostvars[item].ansible_host }}
 {% else %}Hostname {{ hostvars[item].inventory_hostname }}
 {% endif %}
-{% if hostvars[item].ansible_ssh_user is defined %}User {{ hostvars[item].ansible_ssh_user }}
+{% if hostvars[item].ansible_user is defined %}User {{ hostvars[item].ansible_user }}
 {% elif hostvars[item].ansible_user_id is defined %}User {{ hostvars[item].ansible_user_id }}
 {% endif %}
 {% if hostvars[item].ansible_ssh_port is defined and hostvars[item].ansible_ssh_port != 22 %}Port {{ hostvars[item].ansible_ssh_port }}
