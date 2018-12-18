@@ -51,3 +51,7 @@ This role contain one variable `users`. This is the dictionary of form:
         fetch_key: no
         deploy_key_user: no
         known_hosts_path: no
+
+## Tags
+
+- **users-ssh-config**: generate user ssh config for given user and host in /tmp folder (you should manually move it to `~/.ssh/config`)
