@@ -54,4 +54,4 @@ This role contain one variable `users`. This is the dictionary of form:
 
 ## Tags
 
-- **users-ssh-config**: generate user ssh config for given user and host in /tmp folder (you should manually move it to `~/.ssh/config`)
+- **users-ssh-config**: generate user ssh config for current user and host in user home directory (you should manually move it to `~/.ssh/config` and edit as you wish)

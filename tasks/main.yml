@@ -108,10 +108,10 @@
     - users-ssh
     - users-ssh-host-keys
 
-- name: Generate user ssh config file for current user and host in /tmp directory
+- name: Generate user ssh config file for current user and host in user home directory
   template:
     src: ssh_user_config.j2
-    dest: /tmp/{{ inventory_hostname }}
+    dest: ~/ssh_user_config_for_host_{{ inventory_hostname }}
   when:
   tags:
     - users-ssh
