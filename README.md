@@ -27,6 +27,12 @@ This role contain one variable `users`. This is the dictionary of form:
           sudoers:
             - "ALL=(ALL) NOPASSWD: ALL"
 
+        # Set given authorized keys to username's ~/.ssh/autorized_keys
+        authorized_keys:
+          - key: ssh_public_key
+            state: ignore  # default present
+            comment: override_key_comment  # not required
+
           # Create home directory (Default: yes)
           createhome: yes
 
@@ -55,3 +61,4 @@ This role contain one variable `users`. This is the dictionary of form:
 ## Tags
 
 - **users-ssh-config**: generate user ssh config for current user and host in user home directory (you should manually move it to `~/.ssh/config` and edit as you wish)
+- **- users-authorized-keys**: set given SSH authorized keys to users

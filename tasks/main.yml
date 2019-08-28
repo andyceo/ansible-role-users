@@ -15,6 +15,18 @@
   tags:
     - users-users
 
+- name: Set authorized keys for user
+  authorized_key:
+    user: "{{ item.0.key }}"
+    state: "{{ item.1.state|default('present') }}"
+    key: "{{ item.1.key }}"
+    comment: "{{ item.1.comment|default(omit) }}"
+  with_subelements:
+    - "{{ users.users|dict2items }}"
+    - value.authorized_keys
+  tags:
+    - users-authorized-keys
+
 - name: Add user accounts to sudoers
   template:
     src: sudoers.j2
