@@ -2,12 +2,11 @@
 
 Add users, create custom configurations.
 
+
 ## Requirements
 
-Supported operating systems:
+Supported operating systems: see https://github.com/andyceo/ansible-role-users/blob/master/meta/main.yml#L10
 
-- Ubuntu 16.04
-- Ubuntu 18.04
 
 ## Variables
 
@@ -60,6 +59,7 @@ This role contain one variable `users`. This is the dictionary of form:
         fetch_key: no
         deploy_key_user: no
         known_hosts_path: no
+
 
 ## Tags
 
