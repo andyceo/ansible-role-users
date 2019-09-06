@@ -4,7 +4,10 @@ Add users, create custom configurations.
 
 ## Requirements
 
-Ubuntu 16.04
+Supported operating systems:
+
+- Ubuntu 16.04
+- Ubuntu 18.04
 
 ## Variables
 
