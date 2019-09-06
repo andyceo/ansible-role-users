@@ -50,8 +50,8 @@
   tags:
     - users-sudoers
 
-- name: Fetch all public ssh keys from all nodes
-  shell: cat {{ users.ssh.fetch_key }}
+- name: Fetch all users public ssh keys from all hosts
+  command: cat {{ users.ssh.fetch_key }}
   register: users_ssh_keys
   changed_when: false
   when: users.ssh.fetch_key and users.ssh.deploy_key_user
@@ -74,8 +74,8 @@
   tags:
     - users-ssh
 
-- name: Fetch all public ssh host keys from all nodes
-  shell: cat /etc/ssh/ssh_host_ecdsa_key.pub
+- name: Fetch all hosts public ssh keys
+  command: cat /etc/ssh/ssh_host_ecdsa_key.pub
   register: users_ssh_host_keys
   changed_when: false
   when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
