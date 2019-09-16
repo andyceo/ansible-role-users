@@ -24,6 +24,7 @@
   with_subelements:
     - "{{ users.users|dict2items }}"
     - value.authorized_keys
+    - skip_missing: True
   when: item.1.state is not defined or item.1.state != 'ignored'
   tags:
     - users-authorized-keys
