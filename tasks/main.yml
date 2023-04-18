@@ -76,7 +76,7 @@
     - users-ssh
 
 - name: Fetch all hosts public ssh keys
-  command: cat /etc/ssh/ssh_host_ecdsa_key.pub
+  shell: "cut -d ' ' -f -2 /etc/ssh/ssh_host_*.pub | sed -e 's/^/{{ ansible_hostname }} /'"
   register: users_ssh_host_keys
   changed_when: false
   when: users.ssh.known_hosts_path and users.ssh.deploy_key_user
@@ -95,8 +95,9 @@
   known_hosts:
     path: "{{ users.ssh.known_hosts_path }}"
     name: "{{ item }}"
-    key: "{{ item }} {{ hostvars[item]['users_ssh_host_keys']['stdout'] }}"
+    key: "{{ hostvars[item]['users_ssh_host_keys']['stdout'] }}"
     state: present
+    hash_host: false
   with_items:
     - "{{ play_hosts }}"
   when: users.ssh.known_hosts_path and users.ssh.deploy_key_user and ansible_hostname != item
